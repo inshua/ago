@@ -1,0 +1,34 @@
+fun main(){
+    var ls = new LinkedList<int>();         // TODO creator, list literal
+    ls.add(1)
+    ls.add(2)
+    ls.add(3)
+
+    Trace.print(ls.get(1))
+
+    Trace.print(ls[2])
+
+    ls[2] += ls[1]
+
+    Trace.print(ls[2])
+
+    for(var item in ls){
+        Trace.print(item)
+    }
+
+    var a = new ArrayList<int>();
+    a.add(8)
+    a.add(4)
+    a.add(2)
+    Trace.print(a.get(1))
+
+    Trace.print(a[2])
+
+    a[2] += a[1]
+
+    Trace.print(a[2])
+
+    for(var item in a){
+        Trace.print(item)
+    }
+}

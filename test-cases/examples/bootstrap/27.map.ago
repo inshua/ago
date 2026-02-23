@@ -1,0 +1,73 @@
+/**
+a typed Map, for key type int, short, byte boolean, classref, float, char, use Int2NullableObjectHashMap in backend
+for key type, long, double, use  Long2NullableObjectHashMap in backend
+for string and object, HashMap<Object, Object>.
+
+TODO if the key is Object, should invoke hashCode() to put, and `get` to
+**/
+native class HashMap<Key, Value> from Map<Key, Value>{
+    fun new(){
+        init()
+    }
+
+    private fun init() native "org.siphonlab.ago.lang.AgoHashMap.create";
+
+    override count#get() as int native "org.siphonlab.ago.lang.AgoHashMap.getCount";
+    override isReadOnly() as boolean native "org.siphonlab.ago.lang.AgoHashMap.isReadOnly";
+    override clear() native "org.siphonlab.ago.lang.AgoHashMap.clear";
+
+    override get#key(index as Key) as Value native "org.siphonlab.ago.lang.AgoHashMap$Get.get";
+    override put(index as Key, value as Value) native "org.siphonlab.ago.lang.AgoHashMap$Put.put";
+
+    override keys#get() as ReadOnlyCollection<Key>{
+        var ls = new ArrayList<Key>();
+        this.nativeKeys(ls);
+        return ls;
+    }
+    private fun nativeKeys(ls as ArrayList<Key>) native "org.siphonlab.ago.lang.AgoHashMap.keys";
+
+    override values#get() as ReadOnlyCollection<Value> {
+        var ls = new ArrayList<Value>();
+        this.nativeValues(ls);
+        return ls;
+    }
+    private fun nativeValues(ls as ArrayList<Value>) native "org.siphonlab.ago.lang.AgoHashMap.values";
+
+    override containsKey(key as Key) as boolean native "org.siphonlab.ago.lang.AgoHashMap.containsKey";
+    override remove(key as Key) as boolean native "org.siphonlab.ago.lang.AgoHashMap.removeByKey";
+
+    native class HashMapIterator with Iterator<KeyValuePair<Key, Value>> {
+        fun new() {create()}
+        private fun create() native "org.siphonlab.ago.lang.AgoHashMap.Iterator_create";
+        override hasNext() as boolean native "org.siphonlab.ago.lang.AgoHashMap.Iterator_hasNext";
+        override next() as KeyValuePair<Key, Value> native "org.siphonlab.ago.lang.AgoHashMap.Iterator_next";
+    }
+
+    override iterator() as Iterator<KeyValuePair<Key, Value>>{
+        return new HashMapIterator();
+    }
+}
+
+fun main(){
+    var m = new HashMap<int, string>();
+    m.put(1, 'John')
+    m.put(100, 'Jack')
+    Trace.print(m.get(100))
+
+    m[2] = "Sally"
+    m[3] = m[2] + ',' + m[1]
+    Trace.print(m[3])
+
+    for(var entry in m){
+        Trace.print(entry.key + " = " + entry.value)
+    }
+
+    for(var key in m.keys){
+        Trace.print(key);
+    }
+
+
+    for(var key in m.values){
+            Trace.print(key);
+        }
+}

@@ -1,0 +1,54 @@
+/*
+ * Copyright © 2026 Inshua (inshua@gmail.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.siphonlab.ago;
+
+public class ParameterizedClassInfo extends ConcreteTypeInfo{
+    private AgoClass parameterizedBaseClass;
+    private AgoFunction parameterizedConstructor;
+    private Object[] arguments;
+
+    public ParameterizedClassInfo(AgoClass parameterizedBaseClass, AgoFunction parameterizedConstructor, Object[] arguments) {
+        super();
+        this.parameterizedBaseClass = parameterizedBaseClass;
+        this.parameterizedConstructor = parameterizedConstructor;
+        this.arguments = arguments;
+    }
+
+
+    public AgoClass getParameterizedBaseClass() {
+        return parameterizedBaseClass;
+    }
+
+    public void setParameterizedBaseClass(AgoClass parameterizedBaseClass) {
+        this.parameterizedBaseClass = parameterizedBaseClass;
+    }
+
+    public AgoFunction getParameterizedConstructor() {
+        return parameterizedConstructor;
+    }
+
+    public void setParameterizedConstructor(AgoFunction parameterizedConstructor) {
+        this.parameterizedConstructor = parameterizedConstructor;
+    }
+
+    public Object[] getArguments() {
+        return arguments;
+    }
+
+    public void setArguments(Object[] arguments) {
+        this.arguments = arguments;
+    }
+}

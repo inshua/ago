@@ -1,0 +1,143 @@
+/*
+ * Copyright © 2026 Inshua (inshua@gmail.com)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package lang;
+
+interface Collection<T> from Iterable<T>{
+    fun count#get() as int;
+    fun isReadOnly() as boolean;
+    fun add(item as T);
+    fun clear();
+    fun contains(item as T) as boolean;
+    fun copyTo(array as T[], arrayIndex as int);
+    fun remove(item as T) as boolean;
+}
+
+interface ReadOnlyCollection<+T> from Iterable<T>{
+    fun count#get() as int;
+    fun isReadOnly() as boolean;
+    fun add(item as T);
+    fun clear();
+    fun contains(item as T) as boolean;
+    fun copyTo(array as T[], arrayIndex as int);
+    fun remove(item as T) as boolean;
+}
+
+interface ReadWriteList<T> from Collection<T>, Iterable<T>{
+    fun get#index(index as int) as T;
+    fun set#index(index as int, value as T);
+}
+
+interface ReadOnlyList<+T> from ReadOnlyCollection<T>{
+    fun get#index(index as int) as T;
+}
+
+abstract class List<T> with ReadWriteList<T>, ReadOnlyList<T>{
+
+}
+
+native class LinkedList<E> from List<E>{
+    fun new(){
+        init()
+    }
+
+    private fun init() native "org.siphonlab.ago.lang.LinkedList.create";
+
+    override count#get() as int native "org.siphonlab.ago.lang.LinkedList.getCount";
+    override isReadOnly() as boolean native "org.siphonlab.ago.lang.LinkedList.isReadOnly";
+    override add(item as E) native "org.siphonlab.ago.lang.LinkedList.add";
+    override clear() native "org.siphonlab.ago.lang.LinkedList.clear";
+    override contains(item as E) as boolean native "org.siphonlab.ago.lang.LinkedList.contains";
+    override copyTo(array as E[], arrayIndex as int) native "org.siphonlab.ago.lang.LinkedList.copyTo";
+    override remove(item as E) as boolean native "org.siphonlab.ago.lang.LinkedList.remove";
+
+    override get#index(index as int) as E native "org.siphonlab.ago.lang.LinkedList.getAtIndex";
+    override set#index(index as int, value as E) native "org.siphonlab.ago.lang.LinkedList.setAtIndex";
+
+    native class ListIterator with Iterator<E> {
+        fun new() {create()}
+        private fun create() native "org.siphonlab.ago.lang.LinkedList.Iterator_create";
+        override hasNext() as boolean native "org.siphonlab.ago.lang.LinkedList.Iterator_hasNext";
+        override next() as E native "org.siphonlab.ago.lang.LinkedList.Iterator_next";
+    }
+
+    override iterator() as ListIterator{
+        return new ListIterator();
+    }
+}
+
+native class ArrayList<E> from List<E>{
+    fun new(){
+        init()
+    }
+
+    private fun init() native "org.siphonlab.ago.lang.ArrayList.create";
+
+    override count#get() as int native "org.siphonlab.ago.lang.ArrayList.getCount";
+    override isReadOnly() as boolean native "org.siphonlab.ago.lang.ArrayList.isReadOnly";
+    override add(item as E) native "org.siphonlab.ago.lang.ArrayList.add";
+    override clear() native "org.siphonlab.ago.lang.ArrayList.clear";
+    override contains(item as E) as boolean native "org.siphonlab.ago.lang.ArrayList.contains";
+    override copyTo(array as E[], arrayIndex as int) native "org.siphonlab.ago.lang.ArrayList.copyTo";
+    override remove(item as E) as boolean native "org.siphonlab.ago.lang.ArrayList.remove";
+
+    override get#index(index as int) as E native "org.siphonlab.ago.lang.ArrayList.getAtIndex";
+    override set#index(index as int, value as E) native "org.siphonlab.ago.lang.ArrayList.setAtIndex";
+
+    native class ListIterator with Iterator<E> {
+        fun new() {create()}
+        private fun create() native "org.siphonlab.ago.lang.ArrayList.Iterator_create";
+        override hasNext() as boolean native "org.siphonlab.ago.lang.ArrayList.Iterator_hasNext";
+        override next() as E native "org.siphonlab.ago.lang.ArrayList.Iterator_next";
+    }
+
+    override iterator() as ListIterator{
+        return new ListIterator();
+    }
+}
+
+// ------------------- map ------------------------------
+class KeyValuePair<Key, Value>{
+    key as Key {public get;}
+    value as Value {public get;}
+}
+
+interface ReadWriteMap<Key,Value> from Iterable<KeyValuePair<Key, Value>>{
+    fun get#key(index as Key) as Value;
+    fun put(index as Key, value as Value);
+    fun keys#get() as ReadOnlyCollection<Key>;
+    fun values#get() as ReadOnlyCollection<Value>;
+    fun containsKey(key as Key) as boolean;
+    fun remove(key as Key) as boolean;
+
+    fun count#get() as int;
+    fun isReadOnly() as boolean;
+    fun clear();
+}
+
+interface ReadOnlyMap<Key,Value> from Iterable<KeyValuePair<Key, Value>>{
+    fun get#key(index as Key) as Value;
+    fun keys#get() as ReadOnlyCollection<Key>;
+    fun values#get() as ReadOnlyCollection<Value>;
+    fun containsKey(key as Key) as boolean;
+
+    fun count#get() as int;
+    fun isReadOnly() as boolean;
+    fun clear();
+}
+
+abstract class Map<Key, Value> with ReadWriteMap<Key, Value>, ReadOnlyMap<Key, Value>{
+
+}

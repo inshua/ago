@@ -1,0 +1,3 @@
+class Nullable<+T>{
+    fun new(field v as T {get;});
+}

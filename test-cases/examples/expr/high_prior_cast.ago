@@ -1,0 +1,41 @@
+class Animal{
+    fun bark(){
+    }
+    fun friend() as Animal{}
+}
+class Cat from Animal{
+    override bark(){
+        Trace.print("meow")
+    }
+    override friend() as Animal{
+        return new Dog()
+    }
+}
+class Dog from Animal{
+    override bark(){
+        Trace.print("woof")
+    }
+    override friend() as Animal{
+        return new Cat()
+    }
+}
+fun main(){
+    var i = "222"
+    Trace.print(i * 3)
+
+    var j as int = "222"
+    Trace.print(j)
+
+    var k as int = i;
+    f(k);
+
+    var s as string = '222'
+    f#2(s)
+}
+
+fun f#1(s as string){
+    Trace.print('hello string')
+}
+fun f#2(i as int){
+    Trace.print('hello int');
+}

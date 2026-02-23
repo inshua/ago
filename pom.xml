@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright © 2026 Inshua (inshua@gmail.com)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.siphonlab</groupId>
+    <artifactId>ago</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>ago</name>
+    <url>https://github.com/inshua/ago</url>
+    <contributors>
+        <contributor>
+            <name>Inshua</name>
+            <email>inshua@gmail.com</email>
+        </contributor>
+    </contributors>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>22</maven.compiler.source>
+        <maven.compiler.target>22</maven.compiler.target>
+    </properties>
+
+    <modules>
+        <module>ago-engine</module>
+        <module>ago-compiler</module>
+        <module>test-cases</module>
+        <module>ago-engine-rdb</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.18.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.13.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>33.3.1-jre</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.mina</groupId>
+            <artifactId>mina-core</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.agrona/agrona -->
+        <dependency>
+            <groupId>org.agrona</groupId>
+            <artifactId>agrona</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.14.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.5.18</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+    </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>5.10.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+<!--                <plugin>-->
+<!--                    <artifactId>maven-clean-plugin</artifactId>-->
+<!--                    <version>3.1.0</version>-->
+<!--                </plugin>-->
+                <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.13.0</version>
+                    <configuration>
+                        <source>22</source>
+                        <target>22</target>
+<!--                        <compilerArgs>-->
+<!--                            <arg>&#45;&#45;enable-preview</arg>-->
+<!--                        </compilerArgs>-->
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.groovy</groupId>
+                    <artifactId>groovy-eclipse-compiler</artifactId>
+                    <version>3.7.0</version>
+                    <extensions>true</extensions>
+<!--                    <configuration>-->
+<!--                        <enablePreview>true</enablePreview>-->
+<!--                    </configuration>-->
+                </plugin>
+
+                <!--                <plugin>-->
+                <!--                    <artifactId>maven-surefire-plugin</artifactId>-->
+                <!--                    <version>2.22.1</version>-->
+                <!--                </plugin>-->
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.5.2</version>
+                </plugin>
+                <!--                <plugin>-->
+                <!--                    <artifactId>maven-deploy-plugin</artifactId>-->
+                <!--                    <version>2.8.2</version>-->
+                <!--                </plugin>-->
+                <!--                &lt;!&ndash; site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle &ndash;&gt;-->
+                <!--                <plugin>-->
+                <!--                    <artifactId>maven-site-plugin</artifactId>-->
+                <!--                    <version>3.7.1</version>-->
+                <!--                </plugin>-->
+                <!--                <plugin>-->
+                <!--                    <artifactId>maven-project-info-reports-plugin</artifactId>-->
+                <!--                    <version>3.0.0</version>-->
+                <!--                </plugin>-->
+
+<!--                <plugin>-->
+<!--                    <groupId>org.codehaus.mojo</groupId>-->
+<!--                    <artifactId>license-maven-plugin</artifactId>-->
+<!--                    <version>2.7.1</version>-->
+<!--                    <configuration>-->
+<!--                        <useMissingFile>true</useMissingFile>-->
+<!--                        <sortArtifactByName>true</sortArtifactByName>-->
+<!--                        <licenseMerges>-->
+<!--                            <licenseMerge>Apache Software License, Version 2.0|The Apache Software License, Version-->
+<!--                                2.0|Apache License Version 2.0|Apache License, Version 2.0|Apache Public License 2.0|Apache-->
+<!--                                License 2.0|Apache Software License - Version 2.0|Apache 2.0 License|Apache 2.0-->
+<!--                                license|Apache License V2.0|Apache 2|Apache License|Apache|ASF 2.0|Apache 2.0-->
+<!--                            </licenseMerge>-->
+<!--                            <licenseMerge>BSD License|The BSD License|BSD licence|BSD license|BSD|BSD-style license|New BSD-->
+<!--                                License|New BSD license|Revised BSD License|BSD 2-Clause license|BSD 3-Clause "New" or-->
+<!--                                "Revised" License (BSD-3-Clause)-->
+<!--                            </licenseMerge>-->
+<!--                            <licenseMerge>Common Development and Distribution License (CDDL)|Common Development and-->
+<!--                                Distribution License (CDDL) v1.0|COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version-->
+<!--                                1.0|Common Development and Distribution License|CDDL, v1.0|CDDL 1.0 license|CDDL 1.0|CDDL-->
+<!--                                1.1|CDDL-->
+<!--                            </licenseMerge>-->
+<!--                            <licenseMerge>Common Development and Distribution License (CDDL)|CDDL + GPLv2 with classpath-->
+<!--                                exception-->
+<!--                            </licenseMerge>-->
+<!--                            <licenseMerge>Common Development and Distribution License (CDDL)|CDDL+GPL License</licenseMerge>-->
+<!--                            <licenseMerge>Common Development and Distribution License (CDDL)|GPLv2+CE</licenseMerge>-->
+<!--                            <licenseMerge>Common Development and Distribution License (CDDL)|GPL2 w/ CPE</licenseMerge>-->
+<!--                            <licenseMerge>Eclipse Public License|Eclipse Public License - Version 1.0|Eclipse Public License-->
+<!--                                - v 1.0|EPL 1.0 license-->
+<!--                            </licenseMerge>-->
+<!--                            <licenseMerge>GNU Lesser General Public License (LGPL)|The GNU Lesser General Public License,-->
+<!--                                Version 2.1|GNU Lesser General Public License (LGPL), Version 2.1|GNU LESSER GENERAL PUBLIC-->
+<!--                                LICENSE, Version 2.1|GNU Lesser General Public License, version 2.1|GNU LESSER GENERAL-->
+<!--                                PUBLIC LICENSE|GNU Lesser General Public License|GNU Lesser Public License|GNU Lesser-->
+<!--                                General Public License, Version 2.1|Lesser General Public License (LGPL) v 2.1|LGPL 2.1|LGPL-->
+<!--                                2.1 license|LGPL 3.0 license|LGPL, v2.1 or later|LGPL-->
+<!--                            </licenseMerge>-->
+<!--                            <licenseMerge>MIT License|The MIT License|MIT LICENSE</licenseMerge>-->
+<!--                            <licenseMerge>MIT License|Bouncy Castle Licence</licenseMerge>-->
+<!--                            <licenseMerge>Mozilla Public License|Mozilla Public License version 1.1|Mozilla Public License-->
+<!--                                1.1 (MPL 1.1)|MPL 1.1-->
+<!--                            </licenseMerge>-->
+<!--                            <licenseMerge>Mozilla Public License|MPL 2.0, and EPL 1.0</licenseMerge>-->
+<!--                            <licenseMerge>Public Domain|Public domain, Sun Microsoystems</licenseMerge>-->
+<!--                        </licenseMerges>-->
+<!--                        <outputDirectory>licenses</outputDirectory>-->
+<!--                        <inceptionYear>2026</inceptionYear>-->
+<!--                        <organizationName>Inshua(inshua@gmail.com)</organizationName>-->
+<!--                        <licenseName>apache_v2</licenseName>-->
+<!--                    </configuration>-->
+<!--                    <executions>-->
+<!--                        <execution>-->
+<!--                            <id>add-third-party</id>-->
+<!--                            <goals>-->
+<!--                                <goal>add-third-party</goal>-->
+<!--                            </goals>-->
+<!--                        </execution>-->
+<!--                        <execution>-->
+<!--                            <id>aggregate-download-licenses</id>-->
+<!--                            <goals>-->
+<!--                                <goal>aggregate-download-licenses</goal>-->
+<!--                            </goals>-->
+<!--                        </execution>-->
+<!--                        <execution>-->
+<!--                            <id>aggregate-third-party-report</id>-->
+<!--                            <goals>-->
+<!--                                <goal>aggregate-third-party-report</goal>-->
+<!--                            </goals>-->
+<!--                        </execution>-->
+<!--                        <execution>-->
+<!--                            <id>update-file-header</id>-->
+<!--                            <goals>-->
+<!--                                <goal>update-file-header</goal>-->
+<!--                            </goals>-->
+<!--                            <phase>process-sources</phase>-->
+<!--                            <configuration>-->
+<!--                                <licenseName>gpl_v3</licenseName>-->
+<!--                                <roots>-->
+<!--                                    <root>src/main/java</root>-->
+<!--                                    <root>src/test</root>-->
+<!--                                </roots>-->
+<!--                            </configuration>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
+<!--                </plugin>-->
+                <plugin>
+                    <groupId>com.mycila</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>4.6</version>
+                    <configuration>
+                        <properties>
+                            <owner>Inshua</owner>
+                            <email>inshua@gmail.com</email>
+                            <year>2026</year>
+                        </properties>
+                        <mapping>
+                            <ago>JAVA_STYLE</ago>
+                        </mapping>
+                        <licenseSets>
+                            <licenseSet>
+<!--                                <header>licenses/license_header.txt</header>-->
+                                <header>com/mycila/maven/plugin/license/templates/APACHE-2.txt</header>
+                                <excludes>
+                                    <exclude>**/README</exclude>
+                                    <exclude>src/test/resources/**</exclude>
+                                    <exclude>src/main/resources/**</exclude>
+                                </excludes>
+                                <includes>
+                                    <include>**/*.ago</include>
+                                </includes>
+                            </licenseSet>
+                        </licenseSets>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>format</id>
+                            <goals>
+                                <goal>format</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
