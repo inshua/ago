@@ -820,7 +820,7 @@ public class AgoFrame extends CallFrame<AgoFunction>{
             case Box.box_C_vC:              slots.setObject(code[pc++], engine.getBoxer().boxClassRef(code[pc++]));break;
             case Box.unbox_C_vo:            slots.setClassRef(code[pc++], slots.getObject(code[pc++]).getSlots().getClassRef(0));break;
 
-            case Box.box_C_vvC:             slots.setObject(code[pc++], engine.getBoxer().boxClassRef(slots.getClassRef(code[pc++]), engine.getClass(code[pc++])));break;
+            case Box.box_C_vvC:             slots.setObject(code[pc++], engine.getBoxer().boxClassRef(slots.getClassRef(code[pc++]), engine.getClass(code[pc++])));break;  // for ScopedClassInterval, the scope filled at org/siphonlab/ago/compiler/expression/Box.java:151
             case Box.box_C_vCC:             slots.setObject(code[pc++], engine.getBoxer().boxClassRef(code[pc++], engine.getClass(code[pc++])));break;
 
             case Box.box_S_vv:              slots.setObject(code[pc++], engine.getBoxer().boxString(slots.getString(code[pc++])));break;
@@ -1156,7 +1156,7 @@ public class AgoFrame extends CallFrame<AgoFunction>{
                     break;
                 }
                 case New.new_vo: {
-                    slots.setObject(code[pc++], engine.createInstanceFromScopedClass((AgoClass)slots.getObject(code[pc++]),this, runSpace));
+                    slots.setObject(code[pc++], engine.createInstanceFromScopedClassInterval(slots.getObject(code[pc++]),this ));
                     break;
                 }
                 case New.new_method_voCm: {
