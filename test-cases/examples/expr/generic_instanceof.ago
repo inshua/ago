@@ -3,7 +3,9 @@ fun f<T>(t as T){
         g(i)
     } else if(t instanceof string s){
         g(s)
-    } else {
+    }
+
+    if(t not instanceof Primitive){
         Trace.print("non primitive type")
         g(t)
     }

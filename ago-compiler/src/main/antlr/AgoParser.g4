@@ -528,7 +528,7 @@ expression:
     | expression bop = ('+' | '-') expression                # AddSubtractExpr // Level 11, Additive operators
     | expression ('<''<' | '>''>''>' | '>''>') expression    # ShiftExpr     // Level 10, Shift operators
     | expression bop = ('<=' | '>=' | '>' | '<') expression  #  CompareExpr  // Level 9, Relational operators
-    | expression bop = INSTANCEOF variableType identifier?   # InstanceOfExpr
+    | expression bop = NOT? INSTANCEOF variableType identifier?   # InstanceOfExpr
     | expression bop = ('==' | '!=' | '===' | '!==') expression             # EqualsExpr      // Level 8, Equality Operators
     | expression bop = BITAND expression                    # BitAndExpr            // Level 7, Bitwise AND
     | expression bop = BITXOR expression                    # BitXorExpr         // Level 6, Bitwise XOR

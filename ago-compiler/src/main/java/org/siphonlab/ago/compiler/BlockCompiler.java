@@ -595,7 +595,14 @@ public class BlockCompiler {
         } else {
             receiverVar = null;
         }
-        return new InstanceOf(functionDef, expression(instanceOfExpr.expression()), type, receiverVar);
+        var r = new InstanceOf(functionDef, expression(instanceOfExpr.expression()), type, receiverVar);
+        if(instanceOfExpr.NOT() != null){
+            if(receiverVar != null){
+                throw unit.syntaxError(instanceOfExpr.identifier(),"receiver variable not allowed for `not instanceof`");
+            }
+            return functionDef.not(r.setSourceLocation(unit.sourceLocation(instanceOfExpr)));
+        }
+        return r;
     }
 
     private Expression ifElseExpr(IfElseExprContext ifElseExpr) throws CompilationError {
