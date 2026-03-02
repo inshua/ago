@@ -63,6 +63,9 @@ public class Const {
     public static final int const_C_vC = 0x01_0c_01_02;
     public static final int const_fld_C_ovC = 0x01_0c_02_03;
 
+    // for instanceof result
+    public static final int const_B_vc0          = 0x01_04_01_03;
+
     public static String getName(int code){
         return switch(code){
             case 0x01_04_01_02 -> "const_B_vc";
@@ -89,6 +92,7 @@ public class Const {
             case 0x01_03_02_03 -> "const_fld_S_ovc";
             case 0x01_0c_01_02 -> "const_C_vC";
             case 0x01_0c_02_03 -> "const_fld_C_ovC";
+            case 0x01_04_01_03 -> "const_B_vc0";
             default -> throw new IllegalArgumentException("illegal code " + Integer.toHexString(code));
         };
     }

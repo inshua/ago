@@ -853,6 +853,13 @@ public class CodeBuffer {
         ls.addInt(0);
     }
 
+    public void instanceOfGeneric(SlotDef target, SlotDef value, TypeCode genericTypeCode, int className) {
+        ls.add(InstanceOf.instanceof_g_vvC);
+        slot(target);
+        slot(value);
+        ls.addInt(className);
+    }
+
     public void instanceOf(SlotDef target, SlotDef value, int className) {
         ls.add(InstanceOf.instanceof_o_vvC);
         slot(target);

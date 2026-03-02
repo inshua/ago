@@ -17,7 +17,11 @@ native class HashMap<Key, Value> from Map<Key, Value>{
     override clear() native "org.siphonlab.ago.lang.AgoHashMap.clear";
 
     override get#key(index as Key) as Value native "org.siphonlab.ago.lang.AgoHashMap$Get.get";
-    override put(index as Key, value as Value) native "org.siphonlab.ago.lang.AgoHashMap$Put.put";
+    override put(index as Key, value as Value){
+
+    };
+    private fun putPrimitive(index as Key, value as Value) native "org.siphonlab.ago.lang.AgoHashMap$Put.put";
+    private fun putObject(index as Key, value as Value, ) native "org.siphonlab.ago.lang.AgoHashMap$Put.put";
 
     override keys#get() as ReadOnlyCollection<Key>{
         var ls = new ArrayList<Key>();

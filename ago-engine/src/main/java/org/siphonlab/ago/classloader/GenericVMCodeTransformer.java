@@ -182,6 +182,20 @@ public class GenericVMCodeTransformer {
                     var type = (instruction & OpCode.DTYPE_MASK) >> 16;
                     if (type >= GENERIC_TYPE_START) {
                         var typeDesc = genericTypeArguments.mapType(type);
+                        var slotDesc = instantFunction.slotDescs[code.getInt(code.position() + 4)];     // now at target, pick variable
+                        TypeDesc slotTypeDesc = slotDesc.type();
+                        if(typeDesc.equals(slotTypeDesc)) {     // replace 3-size instruction to const_B
+                            setInstanceOfResult(code, true);
+                            break;
+                        } else if(!typeDesc.typeCode.isGeneric() && !slotTypeDesc.typeCode.isGeneric()){
+                            if(typeDesc.typeCode.value == slotTypeDesc.typeCode.value){
+                                // continue
+                            } else {
+                                setInstanceOfResult(code, false);
+                                break;
+                            }
+                        }
+                        
                         int instruction2 = (instruction & OpCode.DTYPE_MASK_NEG) | (typeDesc.typeCode.value << 16);
                         replaceWithInstruction(code, instruction2);
                         if(typeDesc.typeCode.isObject()){
@@ -303,6 +317,13 @@ public class GenericVMCodeTransformer {
         return code;
     }
 
+    private void setInstanceOfResult(IoBuffer code, boolean result) {
+        int constB = Const.const_B_vc0;
+        replaceWithInstruction(code, constB);
+        code.putInt(code.position() + 4, result? 1 : 0);    // true
+        code.putInt(code.position() + 8, 0);    // placeholder
+    }
+
     private static void updateGenericCodeAndClassName(IoBuffer code, int offset, int genericTypeCode, GenericTypeArguments genericTypeArguments, Map<String, ClassHeader> headers, ClassHeader instantFunction) {
         if(genericTypeCode < GENERIC_TYPE_START) return;
 
@@ -355,4 +376,48 @@ public class GenericVMCodeTransformer {
         return header;
     }
 
+    private Boolean processImmediatelyInstanceOf(TypeDesc leftType,TypeDesc rightType) {
+        if(leftType.isPrimitive()) {
+            if (rightType.isPrimitive()) {
+                return leftType.getTypeCode() == rightType.getTypeCode();
+            }
+        }
+        //TODO depends on isThatOrSuperOfThat and lang.Primitive
+//        if(leftType.isPrimitive()){
+//            if(rightType.isPrimitive()) {
+//                return leftType.getTypeCode() == rightType.getTypeCode();
+//            } else if (rightType.isThatOrSuperOfThat(leftType)){
+//                return true;
+//            } else {
+//                return false;
+//            }
+//        } else if(leftType.isPrimitiveFamily()) {
+//            if (rightType.isThatOrDerivedFromThat(leftType)) {
+//                return null;
+//            } else {
+//                return false;
+//            }
+//        } else if(leftType instanceof GenericTypeCode.GenericCodeAvatarClassDef){
+//            if(rightType.isThatOrSuperOfThat(leftType)){
+//                return true;
+//            } else if(rightType.isThatOrDerivedFromThat(leftType)){
+//                return null;
+//            } else {
+//                return false;
+//            }
+//        } else {
+//            assert leftType.getTypeCode() == TypeCode.OBJECT;
+//            if(rightType.isPrimitiveFamily()){
+//                return false;
+//            } else {
+//                if(rightType.isThatOrSuperOfThat(leftType)){
+//                    return true;
+//                } else if(rightType.isThatOrDerivedFromThat(leftType)){
+//                    return null;
+//                } else {
+//                    return false;
+//                }
+//            }
+//        }
+    }
 }

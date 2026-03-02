@@ -5,9 +5,13 @@ fun f<T>(t as T){
         g(s)
     }
 
-    if(t not instanceof Primitive){
+//    if(t not instanceof Primitive){
+//        Trace.print("non primitive type")
+//        g(t)
+//    }
+    if(t instanceof Object o){
         Trace.print("non primitive type")
-        g(t)
+        g(o)
     }
 }
 

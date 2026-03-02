@@ -22,6 +22,8 @@ import org.siphonlab.ago.TypeInfo;
 
 import java.util.*;
 
+import static org.siphonlab.ago.TypeCode.*;
+
 public class TypeDesc {
     protected final TypeCode typeCode;
     protected final String className;
@@ -130,4 +132,7 @@ public class TypeDesc {
         return new GenericParameterTypeInfo(parameterName, sharedGenericTypeParameterClass, this.typeCode, cls);
     }
 
+    public boolean isPrimitive() {
+        return this.typeCode.value == INT_VALUE || this.typeCode.value == LONG_VALUE || this.typeCode.value == FLOAT_VALUE || this.typeCode.value == DOUBLE_VALUE || this.typeCode.value == BOOLEAN_VALUE || this.typeCode.value == STRING_VALUE || this.typeCode.value == SHORT_VALUE || this.typeCode.value == BYTE_VALUE || this.typeCode.value == CHAR_VALUE || this.typeCode.value == CLASS_REF_VALUE;
+    }
 }

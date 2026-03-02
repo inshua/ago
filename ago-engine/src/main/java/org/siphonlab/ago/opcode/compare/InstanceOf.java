@@ -17,13 +17,24 @@ package org.siphonlab.ago.opcode.compare;
 
 import org.siphonlab.ago.opcode.GenericOpCode;
 
+/*
+instanceof(target, v_slot, classname)
+    from v_slot↓        primitive       object          Any         Primitive/PrimitiveNumber   T(Primitive)        T(Object)       T(Any)
+        primitive       t/f             f               t           t/f                         runtime             f               runtime
+        object          f               t/f/runtime     t           f                           f                   runtime         runtime
+        Any             won't happen
+        Primitive/PN    t/f/runtime     f               t           runtime                     runtime             f               runtime
+        T(Primitive)    runtime         f               t           t/f                         runtime             f               runtime
+        T(Object)       f               t/f/runtime     t           f                           f                   runtime         runtime
+        T(Any)          runtime         runtime         runtime     runtime                     runtime             runtime         runtime
+ */
 public class InstanceOf implements GenericOpCode {  
     public static final int KIND_INSTANCE_OF = 0x31_000000;
     public static final int OP                  = 0x31;
 
     public static final int instanceof_g_vvC = 0x31_ff_01_03;
 
-    // instanceof_i(target, v)
+    // instanceof_i(target, v_slot)
     // the length is 3 is for generic usage, for primitive always put 0
     public static final int instanceof_i_vv    = 0x31_0a_01_03;
 

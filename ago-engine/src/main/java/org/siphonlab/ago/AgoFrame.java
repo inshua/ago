@@ -245,8 +245,11 @@ public class AgoFrame extends CallFrame<AgoFunction>{
             case InstanceOf.instanceof_s_vv :  slots.setBoolean(code[pc++], agoClass.slotsCreator.getSlotType(code[pc++]) == short.class); pc++; break;
             case InstanceOf.instanceof_l_vv :  slots.setBoolean(code[pc++], agoClass.slotsCreator.getSlotType(code[pc++]) == long.class); pc++; break;
             //case InstanceOf.instanceof_C_vvC :  slots.setBoolean(code[pc++], agoClass.slotsCreator.getSlotType(code[pc++]) == .class); break;
-            case InstanceOf.instanceof_o_vvC:  slots.setBoolean(code[pc++],
+            case InstanceOf.instanceof2_o_vvC:  slots.setBoolean(code[pc++],
                         agoClass.slotsCreator.getSlotType(code[pc]) == Instance.class && isInstanceOf(slots.getObject(code[pc++]), engine.getClass(code[pc++])));break;
+
+            case InstanceOf.instanceof_o_vvC:  slots.setBoolean(code[pc++],
+                    isInstanceOf(slots.getObject(code[pc++]), engine.getClass(code[pc++])));break;
 
             case InstanceOf.instanceof_p_vvC:  slots.setBoolean(code[pc++],
                         isInstanceOfPrimitive(agoClass.slotsCreator.getSlotType(code[pc++]), engine.getClass(code[pc++])));break;
